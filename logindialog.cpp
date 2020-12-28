@@ -62,6 +62,7 @@ void LoginDialog::on_login_pushButton_clicked()
 void LoginDialog::backend_on_login(QString component, QMattermostBackendUser login)
 {
     Q_UNUSED(component);
+    Q_UNUSED(login);
 
     accept();
 }

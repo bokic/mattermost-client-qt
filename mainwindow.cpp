@@ -28,7 +28,17 @@ MainWindow::MainWindow(QWidget *parent)
             if (!m_user_id.isEmpty()) {
                 m_backend.users__me__teams__members("");
                 m_backend.users__me__teams("team_label");
+                // unreaded
+                // preferences
+                // teams
+                // client?format=old
+                // names
+                // channels
+                // members
+                // ids
+                // status
                 m_backend.users__image("usericon_label", m_user_id);
+                // websocket(intialize)
             } else {
                 ui->usericon_label->clear();
             }
