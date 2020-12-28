@@ -50,7 +50,7 @@ MainWindow::MainWindow(QWidget *parent)
                 childsId.removeDuplicates();
                 childsId.removeAll(m_user_id);
 
-                for(const auto &childId: childsId) {
+                for(const auto &childId: qAsConst(childsId)) {
                     for(const auto &user: users) {
                         if (user.id == childId) {
                             childsNames << user.username;

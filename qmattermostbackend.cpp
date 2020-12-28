@@ -176,7 +176,7 @@ void QMattermostBackend::users__ids(QString component, QStringList ids)
             QJsonDocument doc = QJsonDocument::fromJson(data);
             QJsonArray root = doc.array();
 
-            for(const auto &itemRef: root) {
+            for(const auto &itemRef: qAsConst(root)) {
                 QMattermostBackendUser user;
 
                 auto item = itemRef.toObject();
@@ -272,7 +272,7 @@ void QMattermostBackend::users__me__teams(QString component)
 
             doc = QJsonDocument::fromJson(data);
             auto root = doc.array();
-            for(const auto &itemRef: root) {
+            for(const auto &itemRef: qAsConst(root)) {
                 QMattermostBackendTeam team;
 
                 auto item = itemRef.toObject();
@@ -331,7 +331,7 @@ void QMattermostBackend::users__me__teams__members(QString component)
 
             doc = QJsonDocument::fromJson(data);
             auto root = doc.array();
-            for(const auto &itemRef: root) {
+            for(const auto &itemRef: qAsConst(root)) {
                 QMattermostBackendTeamMember member;
                 auto item = itemRef.toObject();
 
@@ -391,7 +391,7 @@ void QMattermostBackend::users__me__teams__channels(QString component, QString t
 
             doc = QJsonDocument::fromJson(data);
             auto root = doc.array();
-            for(const auto &itemRef: root) {
+            for(const auto &itemRef: qAsConst(root)) {
                 QMattermostBackendChannel channel;
 
                 auto item = itemRef.toObject();
@@ -501,7 +501,7 @@ void QMattermostBackend::channels__posts(QString component, QString channel_id, 
             auto root = doc.object();
             auto orders_item = root.value("order").toArray();
             auto posts_item = root.value("posts").toObject();
-            for(const auto &orderItemRef: orders_item) {
+            for(const auto &orderItemRef: qAsConst(orders_item)) {
                 QMattermostBackendPost post;
                 auto order_id = orderItemRef.toString();
                 auto item = posts_item.find(order_id).value().toObject();
