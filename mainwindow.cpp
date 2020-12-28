@@ -13,6 +13,15 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
+    m_trayIcon = new QSystemTrayIcon(QIcon(":/icons/img/tray_icon.svg"),this);
+    m_trayIcon->setToolTip(tr("Mattermost Qt client"));
+
+    QMenu *trayIconMenu = new QMenu(this);
+    auto quitAction = trayIconMenu->addAction("Quit");
+    connect(quitAction, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
+    m_trayIcon->setContextMenu(trayIconMenu);
+    m_trayIcon->show();
+
     connect(&m_backend, &QMattermostBackend::on_login, this, [this](QString component, QMattermostBackendUser login) {
         if (component == "") {
             QString username;
@@ -173,6 +182,15 @@ void MainWindow::showEvent(QShowEvent *event)
 {
     if (!event->spontaneous())
         m_backend.users__login("");
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    if (m_trayIcon->isVisible())
+    {
+        hide();
+        event->ignore();
+    }
 }
 
 void MainWindow::on_main_treeWidget_itemSelectionChanged()

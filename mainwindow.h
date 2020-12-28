@@ -1,6 +1,7 @@
 #pragma once
 
 #include "qmattermostbackend.h"
+#include <QSystemTrayIcon>
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -17,6 +18,7 @@ public:
 
 protected:
     void showEvent(QShowEvent *event) override;
+    void closeEvent(QCloseEvent *event) override;
 
 private slots:
     void on_main_treeWidget_itemSelectionChanged();
@@ -24,7 +26,8 @@ private slots:
     void on_lineEdit_2_returnPressed();
 
 private:
-    Ui::MainWindow *ui;
+    Ui::MainWindow *ui = nullptr;
+    QSystemTrayIcon *m_trayIcon = nullptr;
     QMattermostBackend m_backend;
     QString m_user_id;
 };

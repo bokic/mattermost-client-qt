@@ -2,5 +2,6 @@
     <qresource prefix="/icons">
         <file alias="burger">img/burger_icon.svg</file>
         <file>img/icon.ico</file>
+        <file>img/tray_icon.svg</file>
     </qresource>
 </RCC>
