@@ -26,7 +26,7 @@ signals:
 
 private:
     void loginToServer();
-    Ui::LoginDialog *ui;
+    Ui::LoginDialog *ui = nullptr;
 
     QMattermostBackend m_backend;
 };
