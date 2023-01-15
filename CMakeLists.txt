@@ -11,10 +11,12 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS
+        Widgets
+        Network
+)
 
-find_package(Qt5 COMPONENTS Network REQUIRED)
-include_directories(${Qt5Network_INCLUDE_DIRS})
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network)
 
 add_executable(mattermost-client-qt
     main.cpp
@@ -29,5 +31,9 @@ add_executable(mattermost-client-qt
     resource.qrc
 )
 
-target_link_libraries(mattermost-client-qt PRIVATE Qt5::Widgets)
-target_link_libraries(mattermost-client-qt PRIVATE Qt5::Network)
+target_link_libraries(mattermost-client-qt PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(mattermost-client-qt PRIVATE Qt${QT_VERSION_MAJOR}::Network)
+
+if(QT_VERSION_MAJOR EQUAL 6)
+    qt_finalize_project()
+endif()
