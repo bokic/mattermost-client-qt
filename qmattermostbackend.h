@@ -47,6 +47,7 @@ signals:
 private:
     QNetworkAccessManager m_networkManager;
     QString m_domain;
+    QByteArray m_sessionToken;
 };
 
 struct QMattermostBackendTimezone {

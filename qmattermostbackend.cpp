@@ -46,7 +46,6 @@ void QMattermostBackend::users__login(QString component)
 
     request.setUrl(QUrl(m_domain + API_V4 + "users/login"));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setRawHeader("X-Requested-With", "XMLHttpRequest");
 
     auto reply = m_networkManager.post(request, data);
 
@@ -56,6 +55,8 @@ void QMattermostBackend::users__login(QString component)
         QVariant statusCode = reply->attribute( QNetworkRequest::HttpStatusCodeAttribute );
         if (statusCode == 200) {
             QMattermostBackendUser login;
+
+            m_sessionToken = reply->rawHeader("Token");
 
             QJsonDocument doc = QJsonDocument::fromJson(data);
             QJsonObject root = doc.object();
@@ -118,7 +119,7 @@ void QMattermostBackend::users__me(QString component)
 
     request.setUrl(QUrl(m_domain + API_V4 + "users/me"));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setRawHeader("X-Requested-With", "XMLHttpRequest");
+    request.setRawHeader("Authorization", "Bearer " + m_sessionToken);
 
     auto reply = m_networkManager.get(request);
     connect(reply, &QNetworkReply::finished, this, [this, component, reply]() {
@@ -164,7 +165,7 @@ void QMattermostBackend::users__ids(QString component, QStringList ids)
 
     request.setUrl(QUrl(m_domain + API_V4 + "users/ids"));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setRawHeader("X-Requested-With", "XMLHttpRequest");
+    request.setRawHeader("Authorization", "Bearer " + m_sessionToken);
 
     auto reply = m_networkManager.post(request, data);
     connect(reply, &QNetworkReply::finished, this, [this, component, reply]() {
@@ -232,7 +233,7 @@ void QMattermostBackend::users__image(QString component, QString username_id)
     QNetworkRequest request;
 
     request.setUrl(QUrl(m_domain + API_V4 + "users/" + username_id + "/image"));
-    request.setRawHeader("X-Requested-With", "XMLHttpRequest");
+    request.setRawHeader("Authorization", "Bearer " + m_sessionToken);
 
     auto reply = m_networkManager.get(request);
     connect(reply, &QNetworkReply::finished, this, [this, component, username_id, reply]() {
@@ -263,7 +264,7 @@ void QMattermostBackend::users__me__teams(QString component)
     QNetworkRequest request;
 
     request.setUrl(QUrl(m_domain + API_V4 + "users/me/teams"));
-    request.setRawHeader("X-Requested-With", "XMLHttpRequest");
+    request.setRawHeader("Authorization", "Bearer " + m_sessionToken);
 
     auto reply = m_networkManager.get(request);
     connect(reply, &QNetworkReply::finished, this, [this, component, reply]() {
@@ -322,7 +323,7 @@ void QMattermostBackend::users__me__teams__members(QString component)
     QNetworkRequest request;
 
     request.setUrl(QUrl(m_domain + API_V4 + "users/me/teams/members"));
-    request.setRawHeader("X-Requested-With", "XMLHttpRequest");
+    request.setRawHeader("Authorization", "Bearer " + m_sessionToken);
 
     auto reply = m_networkManager.get(request);
     connect(reply, &QNetworkReply::finished, this, [this, component, reply]() {
@@ -382,7 +383,7 @@ void QMattermostBackend::users__me__teams__channels(QString component, QString t
     QNetworkRequest request;
 
     request.setUrl(QUrl(m_domain + API_V4 + "users/me/teams/" + team + "/channels"));
-    request.setRawHeader("X-Requested-With", "XMLHttpRequest");
+    request.setRawHeader("Authorization", "Bearer " + m_sessionToken);
 
     auto reply = m_networkManager.get(request);
     connect(reply, &QNetworkReply::finished, this, [this, component, team, reply]() {
@@ -457,7 +458,7 @@ void QMattermostBackend::posts(QString component, QString channel_id, QString pe
 
     request.setUrl(QUrl(m_domain + API_V4 + "posts"));
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    request.setRawHeader("X-Requested-With", "XMLHttpRequest");
+    request.setRawHeader("Authorization", "Bearer " + m_sessionToken);
 
     auto reply = m_networkManager.post(request, data);
 
@@ -489,7 +490,7 @@ void QMattermostBackend::channels__posts(QString component, QString channel_id, 
     QNetworkRequest request;
 
     request.setUrl(QUrl(m_domain + API_V4 + "channels/" + channel_id + "/posts?page=" + QString::number(page) + "&per_page=" + QString::number(per_page)));
-    request.setRawHeader("X-Requested-With", "XMLHttpRequest");
+    request.setRawHeader("Authorization", "Bearer " + m_sessionToken);
 
     auto reply = m_networkManager.get(request);
     connect(reply, &QNetworkReply::finished, this, [this, component, channel_id, reply]() {
