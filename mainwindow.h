@@ -16,6 +16,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void canShow();
+
 protected:
     void showEvent(QShowEvent *event) override;
     void closeEvent(QCloseEvent *event) override;
@@ -28,6 +30,7 @@ private slots:
 private:
     Ui::MainWindow *ui = nullptr;
     QSystemTrayIcon *m_trayIcon = nullptr;
+    bool m_canShow = false;
     QMattermostBackend m_backend;
     QString m_user_id;
 };

@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_trayIcon->show();
 
     connect(m_trayIcon, &QSystemTrayIcon::activated, this, [this](QSystemTrayIcon::ActivationReason reason) {
-        if ((reason == QSystemTrayIcon::Trigger)&&(isHidden()))
+        if ((reason == QSystemTrayIcon::Trigger)&&(isHidden())&&(m_canShow))
             show();
     });
 
@@ -181,6 +181,11 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::canShow()
+{
+    m_canShow = true;
 }
 
 void MainWindow::showEvent(QShowEvent *event)
