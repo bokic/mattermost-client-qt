@@ -166,7 +166,8 @@ MainWindow::MainWindow(QWidget *parent)
         all_users_id.removeDuplicates();
         all_users_id.removeAll(m_user_id);
 
-        m_backend.users__ids("", all_users_id);
+        if (!all_users_id.isEmpty())
+            m_backend.users__ids("", all_users_id);
     });
 
     connect(&m_backend, &QMattermostBackend::on_posts, this, [this](QString component, QString channel_id, QList<QMattermostBackendPost> posts) {
