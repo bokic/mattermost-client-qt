@@ -22,7 +22,7 @@ private slots:
     void backend_on_error(QString component, QString operation, QMattermostBackendError error);
 
 signals:
-    void login(QString component, QString username, QString password, QString token = QStringLiteral(""));
+    void login(QString component, QString username, QString password, QString token = QString());
 
 private:
     void loginToServer();

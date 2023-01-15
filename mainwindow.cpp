@@ -22,6 +22,11 @@ MainWindow::MainWindow(QWidget *parent)
     m_trayIcon->setContextMenu(trayIconMenu);
     m_trayIcon->show();
 
+    connect(m_trayIcon, &QSystemTrayIcon::activated, this, [this](QSystemTrayIcon::ActivationReason reason) {
+        if ((reason == QSystemTrayIcon::Trigger)&&(isHidden()))
+            show();
+    });
+
     connect(&m_backend, &QMattermostBackend::on_login, this, [this](QString component, QMattermostBackendUser login) {
         if (component == "") {
             QString username;

@@ -18,6 +18,5 @@ int main(int argc, char *argv[])
             return 1;
     }
 
-    main.show();
     return app.exec();
 }

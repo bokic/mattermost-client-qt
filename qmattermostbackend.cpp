@@ -201,6 +201,10 @@ void QMattermostBackend::users__ids(QString component, QStringList ids)
                 user.timezone.manualTimezone = timezone.value("manualTimezone").toString();
                 user.timezone.useAutomaticTimezone = timezone.value("useAutomaticTimezone").toBool();
 
+                user.allow_marketing = false;
+
+                user.notify_preps.channel = false;
+
                 users.append(user);
             }
 

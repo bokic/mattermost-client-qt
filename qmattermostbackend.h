@@ -32,7 +32,7 @@ public:
 
     static bool hasCreditentials();
     void readCreditentials();
-    static void setCreditentials(const QString &domain, const QString &username, const QString &password, const QString &alias = QStringLiteral(""));
+    static void setCreditentials(const QString &domain, const QString &username, const QString &password, const QString &alias = QString());
 
 signals:
     void on_login(QString component, QMattermostBackendUser login);
